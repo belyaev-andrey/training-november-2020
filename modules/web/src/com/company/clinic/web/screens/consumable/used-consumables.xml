@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://usedConsumables.caption"
+        messagesPack="com.company.clinic.web.screens.consumable">
+    <data>
+        <collection id="consumablesDc" class="com.company.clinic.entity.Consumable">
+            <view extends="_local"/>
+            <loader id="consumablesDl"/>
+        </collection>
+    </data>
+    <layout expand="consumablesTable">
+        <table id="consumablesTable" width="100%" dataContainer="consumablesDc">
+            <actions>
+                <action id="excel" type="excel"/>
+                <action id="refresh" type="refresh"/>
+            </actions>
+            <buttonsPanel alwaysVisible="true">
+                <button id="consumablesTableExcelBtn" action="consumablesTable.excel"/>
+                <button id="consumablesTableRefreshBtn" action="consumablesTable.refresh"/>
+            </buttonsPanel>
+            <columns>
+                <column id="title"/>
+                <column id="description"/>
+                <column id="price"/>
+            </columns>
+        </table>
+    </layout>
+</window>
