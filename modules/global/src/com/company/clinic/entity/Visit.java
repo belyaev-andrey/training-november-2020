@@ -7,6 +7,7 @@ import com.haulmont.cuba.core.entity.annotation.Lookup;
 import com.haulmont.cuba.core.entity.annotation.LookupType;
 import com.haulmont.cuba.core.entity.annotation.PublishEntityChangedEvents;
 
+import javax.annotation.PostConstruct;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
@@ -123,5 +124,10 @@ public class Visit extends StandardEntity {
 
     public void setPet(Pet pet) {
         this.pet = pet;
+    }
+
+    @PostConstruct
+    public void postConstruct() {
+        setAmount(BigDecimal.TEN);
     }
 }
