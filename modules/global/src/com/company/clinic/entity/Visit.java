@@ -5,6 +5,7 @@ import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.cuba.core.entity.annotation.Listeners;
 import com.haulmont.cuba.core.entity.annotation.Lookup;
 import com.haulmont.cuba.core.entity.annotation.LookupType;
+import com.haulmont.cuba.core.entity.annotation.PublishEntityChangedEvents;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -17,6 +18,7 @@ import java.util.List;
 @Entity(name = "clinic_Visit")
 @NamePattern("%s %s|visitDate,description")
 @Listeners("clinic_VisitEntityListener")
+@PublishEntityChangedEvents
 public class Visit extends StandardEntity {
     private static final long serialVersionUID = -8254124810105648524L;
 
