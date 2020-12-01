@@ -38,6 +38,7 @@
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="visitDc">
             <column width="350px">
+                <textField id="numberField" property="number"/>
                 <lookupPickerField id="petField" optionsContainer="petsDc" property="pet"/>
                 <lookupPickerField id="veterinarianField" optionsContainer="veterinariansDc" property="veterinarian"/>
                 <dateField id="visitDateField" property="visitDate"/>

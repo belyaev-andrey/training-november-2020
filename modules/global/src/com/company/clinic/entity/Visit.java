@@ -2,6 +2,7 @@ package com.company.clinic.entity;
 
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.StandardEntity;
+import com.haulmont.cuba.core.entity.annotation.Listeners;
 import com.haulmont.cuba.core.entity.annotation.Lookup;
 import com.haulmont.cuba.core.entity.annotation.LookupType;
 
@@ -15,6 +16,7 @@ import java.util.List;
 @Table(name = "CLINIC_VISIT")
 @Entity(name = "clinic_Visit")
 @NamePattern("%s %s|visitDate,description")
+@Listeners("clinic_VisitEntityListener")
 public class Visit extends StandardEntity {
     private static final long serialVersionUID = -8254124810105648524L;
 
@@ -23,6 +25,9 @@ public class Visit extends StandardEntity {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "PET_ID")
     private Pet pet;
+
+    @Column(name = "NUMBER_")
+    private Long number;
 
     @Lookup(type = LookupType.DROPDOWN, actions = {})
     @NotNull
@@ -53,6 +58,14 @@ public class Visit extends StandardEntity {
             inverseJoinColumns = @JoinColumn(name = "CONSUMABLE_ID"))
     @ManyToMany
     private List<Consumable> consumables;
+
+    public Long getNumber() {
+        return number;
+    }
+
+    public void setNumber(Long number) {
+        this.number = number;
+    }
 
     public Integer getHoursSpent() {
         return hoursSpent;

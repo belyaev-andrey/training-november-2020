@@ -37,6 +37,7 @@
                 <action id="excel" type="excel"/>
             </actions>
             <columns>
+                <column id="number"/>
                 <column id="pet"/>
                 <column id="veterinarian"/>
                 <column id="visitDate"/>
