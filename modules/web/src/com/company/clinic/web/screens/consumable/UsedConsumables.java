@@ -5,8 +5,6 @@ import com.company.clinic.service.ConsumablesService;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.LoadContext;
 import com.haulmont.cuba.core.global.View;
-import com.haulmont.cuba.gui.model.CollectionContainer;
-import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
 
 import javax.inject.Inject;
@@ -14,6 +12,7 @@ import java.util.List;
 
 @UiController("clinic_UsedConsumables")
 @UiDescriptor("used-consumables.xml")
+@LoadDataBeforeShow
 public class UsedConsumables extends Screen {
 
     @Inject
@@ -29,5 +28,8 @@ public class UsedConsumables extends Screen {
         return dataManager.loadList(loadContext);
         //return consumablesService.getUsedConsumables();
     }
+
+
+
 
 }

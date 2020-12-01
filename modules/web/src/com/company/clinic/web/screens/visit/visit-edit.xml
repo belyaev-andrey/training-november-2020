@@ -25,7 +25,7 @@
                 </query>
             </loader>
         </collection>
-        <collection id="veterinariansDc" class="com.company.clinic.entity.Veterinarian" view="_minimal">
+        <collection id="veterinariansDc" class="com.company.clinic.entity.Veterinarian" view="_base">
             <loader id="veterinariansDl">
                 <query>
                     <![CDATA[select e from clinic_Veterinarian e]]>

@@ -76,6 +76,6 @@ public class ConsumablesServiceBean implements ConsumablesService {
         LoadContext<Consumable> loadContext = new LoadContext<>(Consumable.class)
                 .setQuery(new LoadContext.Query("select distinct c from clinic_Visit v join v.consumables c " +
                 "where @between(c.createTs, now-7, now+1, day)")).setView(View.LOCAL);
-        return dataManager.loadList(loadContext);
+        return dataManager.secure().loadList(loadContext);
     }
 }
