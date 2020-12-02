@@ -30,13 +30,19 @@ cuba {
         version = '0.1'
         isSnapshot = true
     }
+    tomcat {
+        port = '8050'
+        ajpPort = '8059'
+        debugPort = '8058'
+    }
 }
 
 dependencies {
     appComponent("com.haulmont.cuba:cuba-global:$cubaVersion")
+    appComponent('com.haulmont.addon.helium:helium-global:0.3.1')
 }
 
-def mysql = 'mysql:mysql-connector-java:8.0.15'
+def postgres = 'org.postgresql:postgresql:42.2.9'
 
 configure([globalModule, coreModule, webModule]) {
     apply(plugin: 'java')
@@ -88,8 +94,8 @@ configure(coreModule) {
     dependencies {
         compile(globalModule)
         compileOnly(servletApi)
-        jdbc(mysql)
-        testRuntime(mysql)
+        jdbc(postgres)
+        testRuntime(postgres)
     }
 
     task cleanConf(description: 'Cleans up conf directory', type: Delete) {
@@ -146,6 +152,21 @@ configure(webModule) {
     task deploy(dependsOn: [assemble, cleanConf], type: CubaDeployment) {
         appName = "${modulePrefix}"
         appJars(modulePrefix + '-global', modulePrefix + '-web')
+    }
+
+    task buildScssThemes(type: CubaWebScssThemeCreation)
+
+    task deployThemes(type: CubaDeployThemeTask, dependsOn: buildScssThemes)
+
+    assemble.dependsOn buildScssThemes
+
+    task themesJar(type: Jar) {
+        from file('themes')
+        classifier = 'themes'
+    }
+
+    artifacts {
+        archives themesJar
     }
 }
 
