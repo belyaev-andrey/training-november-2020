@@ -7,5 +7,6 @@ import com.company.clinic.entity.Visit;
 @UiDescriptor("visit-browse.xml")
 @LookupComponent("visitsTable")
 @LoadDataBeforeShow
+@MultipleOpen(false)
 public class VisitBrowse extends StandardLookup<Visit> {
 }

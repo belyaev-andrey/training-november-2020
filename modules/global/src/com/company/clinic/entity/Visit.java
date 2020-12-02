@@ -1,5 +1,6 @@
 package com.company.clinic.entity;
 
+import com.haulmont.chile.core.annotations.MetaProperty;
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.cuba.core.entity.annotation.Listeners;
@@ -124,6 +125,24 @@ public class Visit extends StandardEntity {
 
     public void setPet(Pet pet) {
         this.pet = pet;
+    }
+
+    @Transient
+    @MetaProperty(related = {"visitDate", "hoursSpent"})
+    public LocalDateTime getVisitEndDate() {
+        if (getVisitDate() == null || getHoursSpent() == null) {
+            return null;
+        }
+        return getVisitDate().plusHours(getHoursSpent());
+    }
+
+    @Transient
+    @MetaProperty(related = {"pet", "visitDate"})
+    public String getVisitCaption() {
+        if (getPet() == null || getVisitDate() == null) {
+            return "";
+        }
+        return String.format("%s: %s", getPet().getName(), getVisitDate());
     }
 
     @PostConstruct

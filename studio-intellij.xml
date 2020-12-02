@@ -16,6 +16,18 @@
           <option name="url" value="jdbc:postgresql://localhost/clinic-107217" />
           <option name="user" value="cuba" />
         </SavedDbProperties>
+        <SavedDbProperties>
+          <option name="databaseName" value="clinic" />
+          <option name="dbType" value="mysql" />
+          <option name="dbmsVersion" />
+          <option name="host" value="localhost" />
+          <option name="pass" value="pw" />
+          <option name="port" value="49154" />
+          <option name="systemPassword" value="" />
+          <option name="systemUser" value="" />
+          <option name="url" value="jdbc:mysql://localhost:49154/clinic?useSSL=false&amp;allowMultiQueries=true&amp;serverTimezone=UTC" />
+          <option name="user" value="root" />
+        </SavedDbProperties>
       </list>
     </option>
   </component>
