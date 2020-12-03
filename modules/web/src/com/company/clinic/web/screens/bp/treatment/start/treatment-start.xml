@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://treatmentStart.caption"
+        messagesPack="com.company.clinic.web.screens.bp.treatment.start">
+    <data>
+        <collection id="petsDc" class="com.company.clinic.entity.Pet">
+            <view extends="_local">
+                <property name="type" view="_minimal"/>
+            </view>
+            <loader id="petsDl">
+                <query>
+                    <![CDATA[select e from clinic_Pet e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="nursesDc" class="com.haulmont.cuba.security.entity.User">
+            <view extends="_local"/>
+            <loader id="nursesDl">
+                <query>
+                    <![CDATA[select e from sec$User e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="doctorsDc" class="com.haulmont.cuba.security.entity.User">
+            <view extends="_local"/>
+            <loader id="doctorsDc">
+                <query>
+                    <![CDATA[select e from sec$User e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <layout>
+        <form>
+            <column width="400px">
+                <label id="welcomeLabel" value="msg://welcomeLabel.value" align="MIDDLE_CENTER" htmlEnabled="true"/>
+                <lookupField id="petLookup" caption="msg://pet.lookup" optionsContainer="petsDc"/>
+                <textArea id="description" caption="msg://description"/>
+                <lookupField id="nurseLookup" caption="msg://nurse.lookup" optionsContainer="nursesDc"/>
+                <lookupField id="doctorLookup" caption="msg://doctor.lookup" optionsContainer="doctorsDc"/>
+                <buttonsPanel>
+                    <button id="startBtn" caption="msg://startBtn.caption" icon="PLAY_CIRCLE"/>
+                </buttonsPanel>
+            </column>
+        </form>
+
+    </layout>
+</window>

@@ -10,7 +10,9 @@ public class ClinicWebTestContainer extends TestContainer {
     public ClinicWebTestContainer() {
         appComponents = Arrays.asList(
                 "com.haulmont.cuba",
-                "com.haulmont.addon.helium");
+                "com.haulmont.addon.helium",
+                "com.haulmont.reports",
+                "com.haulmont.addon.bproc");
         appPropertiesFiles = Arrays.asList(
                 // List the files defined in your web.xml
                 // in appPropertiesConfig context parameter of the web module

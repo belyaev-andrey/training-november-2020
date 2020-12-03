@@ -3,13 +3,13 @@ package com.company.clinic.web.screens.visit;
 import com.company.clinic.entity.Consumable;
 import com.company.clinic.entity.Pet;
 import com.company.clinic.service.VisitService;
+import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.gui.components.Button;
-import com.haulmont.cuba.gui.model.CollectionChangeType;
-import com.haulmont.cuba.gui.model.CollectionContainer;
-import com.haulmont.cuba.gui.model.CollectionLoader;
-import com.haulmont.cuba.gui.model.InstanceContainer;
+import com.haulmont.cuba.gui.model.*;
 import com.haulmont.cuba.gui.screen.*;
 import com.company.clinic.entity.Visit;
+import com.haulmont.reports.gui.actions.EditorPrintFormAction;
+import org.slf4j.Logger;
 
 import javax.inject.Inject;
 
@@ -27,6 +27,18 @@ public class VisitEdit extends StandardEditor<Visit> {
 
     @Inject
     private CollectionLoader<Pet> petsDl;
+
+    @Inject
+    private Button runReport;
+    @Inject
+    private DataContext dataContext;
+    @Inject
+    private DataManager dataManager;
+
+    @Subscribe
+    public void onInit(InitEvent event) {
+        runReport.setAction(new EditorPrintFormAction(this, null));
+    }
 
     @Subscribe
     public void onInitEntity(InitEntityEvent<Visit> event) {

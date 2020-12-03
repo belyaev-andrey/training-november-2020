@@ -16,7 +16,22 @@
                 </query>
             </loader>
         </collection>
+        <collection id="petsDc" class="com.company.clinic.entity.Pet">
+            <view extends="_local">
+                <property name="type" view="_minimal"/>
+                <property name="owner" view="_minimal"/>
+            </view>
+            <loader id="petsDl">
+                <query>
+                    <![CDATA[select e from clinic_Pet e]]>
+                </query>
+            </loader>
+        </collection>
     </data>
+    <actions>
+        <action id="schedule" caption="msg://scheduleAction.caption" icon="font-icon:CALENDAR_PLUS_O"/>
+        <action id="refresh" caption="msg://refreshAction.caption" icon="REFRESH" />
+    </actions>
     <layout>
         <cssLayout id="horizontalWrap"
                    stylename="c-sidemenu-layout"
@@ -70,10 +85,20 @@
                       stylename="c-workarea"
                       height="100%">
                 <initialLayout spacing="true" margin="true" expand="visitsCalendar">
-                    <hbox width="100%">
-                        <buttonsPanel>
-                            <button id="refreshBtn" icon="font-icon:REFRESH" caption="msg://refresh"/>
-                        </buttonsPanel>
+                    <hbox id="topBox" spacing="true" width="100%">
+                        <form id="scheduleForm">
+                            <column width="400px" childrenCaptionWidth="AUTO">
+                                <lookupField id="petSelector" caption="msg://petSelector.caption"
+                                             optionsContainer="petsDc"/>
+                                <dateField id="dateSelector" caption="msg://dateSelector.caption"
+                                           datatype="localDateTime"/>
+                                <buttonsPanel>
+                                    <button action="schedule"/>
+                                    <button action="refresh"/>
+                                </buttonsPanel>
+                            </column>
+                        </form>
+                        <label value="msg://welcomeText" align="MIDDLE_CENTER"/>
                     </hbox>
                     <calendar id="visitsCalendar" dataContainer="visitsDc" startDateProperty="visitDate"
                               captionProperty="visitCaption" descriptionProperty="description"

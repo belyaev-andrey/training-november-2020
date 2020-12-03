@@ -1,11 +1,14 @@
 package com.company.clinic.web.screens.main;
 
+import com.company.clinic.entity.Pet;
 import com.company.clinic.entity.Visit;
+import com.company.clinic.service.VisitService;
 import com.haulmont.cuba.gui.ScreenBuilders;
-import com.haulmont.cuba.gui.components.Button;
-import com.haulmont.cuba.gui.components.Calendar;
+import com.haulmont.cuba.gui.components.*;
+import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
+import com.haulmont.cuba.security.global.UserSession;
 import com.haulmont.cuba.web.app.main.MainScreen;
 
 import javax.inject.Inject;
@@ -20,15 +23,23 @@ public class ExtMainScreen extends MainScreen {
     private CollectionLoader<Visit> visitsDl;
     @Inject
     private ScreenBuilders screenBuilders;
+    @Inject
+    private CollectionLoader<Pet> petsDl;
+    @Inject
+    private VisitService visitService;
+    @Inject
+    private LookupField<Pet> petSelector;
+    @Inject
+    private UserSession userSession;
+    @Inject
+    private DateField<LocalDateTime> dateSelector;
+    @Inject
+    private CollectionContainer<Visit> visitsDc;
 
     @Subscribe
     public void onBeforeShow(BeforeShowEvent event) {
         visitsDl.load();
-    }
-
-    @Subscribe("refreshBtn")
-    public void onRefreshBtnClick(Button.ClickEvent event) {
-        visitsDl.load();
+        petsDl.load();
     }
 
     @Subscribe("visitsCalendar")
@@ -50,6 +61,25 @@ public class ExtMainScreen extends MainScreen {
 
         screen.show();
 
+    }
+
+    @Subscribe("schedule")
+    public void onSchedule(Action.ActionPerformedEvent event) {
+        Visit visit = visitService.scheduleVisit(petSelector.getValue(),
+                dateSelector.getValue(), userSession.getCurrentOrSubstitutedUser());
+
+        visitsDc.replaceItem(visit);
+
+        petSelector.clear();
+        dateSelector.clear();
+    }
+
+
+
+    @Subscribe("refresh")
+    public void onRefresh(Action.ActionPerformedEvent event) {
+        petsDl.load();
+        visitsDl.load();
     }
 
 
