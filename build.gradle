@@ -1,6 +1,7 @@
 buildscript {
     ext.cubaVersion = '7.2.10'
-    repositories {
+    repositories { 
+        mavenLocal()
         maven {
             url 'https://dl.bintray.com/cuba-platform/main'
 
@@ -14,7 +15,7 @@ buildscript {
     }
 }
 
-def modulePrefix = 'app'
+def modulePrefix = 'clinic'
 
 def globalModule = project(":${modulePrefix}-global")
 def coreModule = project(":${modulePrefix}-core")
@@ -80,6 +81,13 @@ configure(globalModule) {
     entitiesEnhancing {
         main {
             enabled = true
+        }
+    }
+
+    jar {
+        manifest {
+            attributes('App-Component-Id': cuba.artifact.group)
+            attributes('App-Component-Version': cuba.artifact.version + (cuba.artifact.isSnapshot ? '-SNAPSHOT' : ''))
         }
     }
 }
