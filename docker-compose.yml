@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:alpine
+    environment:
+      - POSTGRES_DB=clinic-107217
+      - POSTGRES_USER=cuba
+      - POSTGRES_PASSWORD=cuba
+  app:
+    image: clinic:latest
+    environment:
+      - CUBA_DATASOURCE_HOST=postgres

@@ -2,6 +2,7 @@ buildscript {
     ext.cubaVersion = '7.2.10'
     repositories {
         mavenLocal()
+        gradlePluginPortal()
         maven {
             url 'https://dl.bintray.com/cuba-platform/main'
 
@@ -19,6 +20,7 @@ buildscript {
     }
     dependencies {
         classpath "com.haulmont.gradle:cuba-plugin:$cubaVersion"
+        classpath 'com.bmuschko:gradle-docker-plugin:6.4.0'
     }
 }
 
@@ -31,6 +33,9 @@ def webModule = project(":${modulePrefix}-web")
 def servletApi = 'javax.servlet:javax.servlet-api:3.1.0'
 
 apply(plugin: 'cuba')
+apply(plugin: 'com.bmuschko.docker-remote-api')
+
+import com.bmuschko.gradle.docker.tasks.image.*
 
 cuba {
     artifact {
@@ -204,3 +209,19 @@ task restart(dependsOn: ['stop', ":${modulePrefix}-core:deploy", ":${modulePrefi
 }
 restart.finalizedBy start
 
+task buildUberJar(type: CubaUberJarBuilding) {
+    singleJar = true
+    appProperties = ['cuba.automaticDatabaseUpdate': true]
+}
+
+task copyUberJar (type: Copy) {
+    dependsOn 'buildUberJar'
+    from "build/distributions/uberJar/${modulePrefix}.jar"
+    into "docker-image"
+}
+
+task buildDockerImage(type: DockerBuildImage) {
+    dependsOn 'copyUberJar'
+    inputDir = file('docker-image')
+    images.add("${modulePrefix}:latest")
+}
